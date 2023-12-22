@@ -1,8 +1,7 @@
-import { Button, StyleSheet, Text, View, ScrollView, Image, ImageBackground } from 'react-native';
+import { StyleSheet, ScrollView, ImageBackground, Button } from 'react-native';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { getAllUsers } from '../features/userSlice';
-import { FontAwesome5, MaterialIcons, Feather, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
 import HomeDeals from '../components/HomeDeals';
 import HomeProfile from '../components/HomeProfile';
 import HomeServices from '../components/HomeServices';
@@ -16,7 +15,7 @@ const HomeScreen = ({ navigation }) => {
     <ImageBackground source={require('../../assets/fbg.jpeg')} style={styles.backgroundImage}>
         <ScrollView style={styles.body} showsVerticalScrollIndicator={false}>
           <HomeProfile />
-          <HomeServices />
+          <HomeServices navigation={navigation} />
           <HomeVooma />
           <HomeDeals />
         </ScrollView>

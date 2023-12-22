@@ -1,23 +1,23 @@
-import { Button, StyleSheet, Text, View, ScrollView, Image } from 'react-native';
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import React from 'react';
 import { FontAwesome5, MaterialIcons, Feather, MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'; 
 
-const HomeServices = () => {
+const HomeServices = ({navigation}) => {
   return (
     <View style={styles.services}>
 
         <View style={styles.row}>
 
-        <View>
+        <TouchableOpacity onPress={() => navigation.navigate('SendForm')}>
             <View style={styles.bg}>
-            <View style={styles.iconbg}>
-                <MaterialIcons name="send-to-mobile" size={35} color="chartreuse" />
-            </View>
+                <View style={styles.iconbg}>
+                    <MaterialIcons name="send-to-mobile" size={35} color="chartreuse" />
+                </View>
             </View>
             <View>
-            <Text style={styles.description}>SEND TO MOBILE</Text>
+                <Text style={styles.description}>SEND TO MOBILE</Text>
             </View>
-        </View>
+        </TouchableOpacity>
 
         <View>
             <View style={styles.bg}>

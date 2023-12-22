@@ -7,6 +7,7 @@ import { FontAwesome, MaterialCommunityIcons, FontAwesome5, SimpleLineIcons } fr
 import SavingsScreen from '../screens/SavingsScreen';
 import LoanScreen from '../screens/LoanScreen';
 import AccountScreen from '../screens/AccountScreen';
+import AccountStackScreen from './AccountStackScreen';
 
 const TabNavigation = () => {
 
@@ -17,7 +18,7 @@ const TabNavigation = () => {
         <Tab.Navigator screenOptions={{ headerShown: false }}>
             <Tab.Screen name="HomeTab" component={HomeStackScreen} options={{
               tabBarActiveTintColor: 'midnightblue',
-              tabBarInactiveTintColor: 'chartreuse',
+              tabBarInactiveTintColor: 'forestgreen',
               tabBarIcon: ({ focused, color, size }) => ( 
                     <FontAwesome name="home" size={24} color={color} />
               ),
@@ -28,7 +29,7 @@ const TabNavigation = () => {
 
             <Tab.Screen name="Savings Tab" component={SavingsScreen} options={{
               tabBarActiveTintColor: 'midnightblue',
-              tabBarInactiveTintColor: 'chartreuse',
+              tabBarInactiveTintColor: 'forestgreen',
               tabBarIcon: ({ focused, color, size }) => ( 
                   <MaterialCommunityIcons name="piggy-bank-outline" size={24} color={color} />
               ),
@@ -39,7 +40,7 @@ const TabNavigation = () => {
 
             <Tab.Screen name="Loans Tab" component={LoanScreen} options={{
               tabBarActiveTintColor: 'midnightblue',
-              tabBarInactiveTintColor: 'chartreuse',
+              tabBarInactiveTintColor: 'forestgreen',
               tabBarIcon: ({ focused, color, size }) => ( 
                 <MaterialCommunityIcons name="hand-coin-outline" size={24} color={color} />
               ),
@@ -48,9 +49,9 @@ const TabNavigation = () => {
               ),
             }} />
 
-            <Tab.Screen name="Account Tab" component={AccountScreen} options={{
+            <Tab.Screen name="Account Tab" component={AccountStackScreen} options={{
               tabBarActiveTintColor: 'midnightblue',
-              tabBarInactiveTintColor: 'chartreuse',
+              tabBarInactiveTintColor: 'forestgreen',
               tabBarIcon: ({ focused, color, size }) => ( 
                 <SimpleLineIcons name="wallet" size={24} color={color} />
               ),

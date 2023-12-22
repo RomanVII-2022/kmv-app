@@ -18,7 +18,7 @@ const DrawerNavigation = () => {
             headerTintColor: 'white',
         }}
     >
-        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="HomeDrawer" component={HomeScreen} />
         <Drawer.Screen name="Profile" component={ProfileScreen} />
     </Drawer.Navigator>
   )
