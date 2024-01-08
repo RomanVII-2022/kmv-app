@@ -1,10 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { APIURL } from '@env';
+axios.defaults.validateStatus = () => true;
+const axiosInstance = axios.create({
+    baseURL: APIURL
+})
 
 export const sendtomobile = createAsyncThunk('mpesa/sendtomobile', async (formData) => {
-    const response = await axios.get('http://localhost:5555/mpesa/send-to-mobile')
-    console.log(response)
-    // return response.data
+    const response = await axiosInstance.post('/mpesa/send-to-mobile', {
+        phone: formData.phonenumber,
+        amount: formData.amount
+    })
+    console.log(response.data)
 })
 
 const initialState = {

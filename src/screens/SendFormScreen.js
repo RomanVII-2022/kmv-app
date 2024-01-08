@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard } from 'react-native'
+import { StyleSheet, Text, View, TextInput, Button, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native'
 import React, { useState, useEffect } from 'react';
 import { FontAwesome5, MaterialIcons, Entypo } from '@expo/vector-icons'; 
 import { sendtomobile } from '../features/mpesaSlice';
@@ -9,31 +9,11 @@ import axios from 'axios';
 
 
 const sendMoneySchema = yup.object({
-  phonenumber: yup.string().required(),
-  amount: yup.string().required()
+  phonenumber: yup.string().required("Phone number is required"),
+  amount: yup.string().required("Amount is required")
 })
 
 const SendFormScreen = () => {
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Replace 'YOUR_API_ENDPOINT' with the actual API endpoint
-        const response = await axios.get('http://localhost:5555/user/get-all-users');
-
-        setAmount(response.data);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    // Call the function to make the API request
-    fetchData();
-  }, [])
-
-  const [amount, setAmount] = useState([])
-
-
 
   const dispatch = useDispatch()
 
@@ -47,7 +27,7 @@ const SendFormScreen = () => {
               </View>
         </View>
         
-        <View style={styles.body}>
+        <ScrollView showsVerticalScrollIndicator={false} style={styles.body}>
           <Text style={{fontWeight: '500'}}>KMV BANK</Text>
           <View style={styles.inputfield}>
               <TextInput placeholder='******54321' cursorColor={'midnightblue'} />
@@ -73,11 +53,17 @@ const SendFormScreen = () => {
               <>
 
                 <View style={{...styles.inputfield, marginBottom: 40}}>
-                    <TextInput onChangeText={props.handleChange('phonenumber')} value={props.values.phonenumber} placeholder='254712345678' cursorColor={'midnightblue'} />
+                    <TextInput onChangeText={props.handleChange('phonenumber')} value={props.values.phonenumber} placeholder='254712345678' cursorColor={'midnightblue'} />    
                 </View>
+                {props.errors.phonenumber && (
+                  <Text style={{color: 'red'}}>{props.errors.phonenumber}</Text>
+                )}
                 <View style={{...styles.inputfield, marginBottom: 60}}>
                     <TextInput onChangeText={props.handleChange('amount')} value={props.values.amount} placeholder='AMOUNT' cursorColor={'midnightblue'} />
                 </View>
+                {props.errors.amount && (
+                  <Text style={{color: 'red'}}>{props.errors.amount}</Text>
+                )}
                 <Button title='SUBMIT' onPress={props.handleSubmit} color={'midnightblue'} />
 
                 </>
@@ -85,14 +71,8 @@ const SendFormScreen = () => {
 
           </Formik>
 
-              {amount.map(mt => (
-                <Text>{mt}</Text>
-              ))
-                
-              }
-          
+        </ScrollView>
 
-        </View>
       </View>
     </TouchableWithoutFeedback>
   )
