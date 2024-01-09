@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View, ImageBackground, TextInput, Button, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { userLogin } from '../features/authSlice';
 import { useDispatch } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthContext from '../context/AuthContext';
 
 const loginSchema = yup.object({
     email: yup.string().email().required("Email is required"),
@@ -13,6 +15,8 @@ const loginSchema = yup.object({
 const LoginScreen = () => {
 
     const dispatch = useDispatch()
+
+    const { userLogin } = useContext(AuthContext)
 
   return (
     <ImageBackground source={require('../../assets/fbg.jpeg')} style={styles.backgroundImage}>
@@ -24,7 +28,7 @@ const LoginScreen = () => {
                     initialValues={{email: '', password: ''}}
                     validationSchema={loginSchema}
                     onSubmit={(values, actions) => {
-                        dispatch(userLogin(values))
+                        userLogin(values)
                         actions.resetForm()
                     }}
 

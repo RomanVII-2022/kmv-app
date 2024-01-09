@@ -1,17 +1,15 @@
 import { useSelector } from "react-redux";
 import LoginScreen from "../../screens/LoginScreen";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useContext } from "react";
+import AuthContext from "../../context/AuthContext";
 
-const getToken = async () => {
-    const token = await AsyncStorage.getItem('authtoken')
-    return token
-}
 
 const PrivateScreen = ({children}) => {
-    const tkn = getToken();
-    console.log(tkn)
-    const userToken = true
-    if (userToken) {
+
+    const { usertoken } = useContext(AuthContext)
+
+    if (usertoken) {
         return children
     }else {
         return <LoginScreen />
