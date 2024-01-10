@@ -6,6 +6,7 @@ const axiosInstance = axios.create({
 })
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -15,6 +16,7 @@ export const AuthProvider = ({children}) => {
 
     const [usertoken, setUsertoken] = useState(null)
     const [isLoading, setIsloading] = useState(false)
+    const [userInfo, setUserInfo] = useState(null)
 
     const userLogin = async (formData) => {
         setIsloading(true)
@@ -30,6 +32,9 @@ export const AuthProvider = ({children}) => {
             const token  = await AsyncStorage.getItem('userToken')
             setUsertoken(token)
             setIsloading(false)
+            
+            const taskResponse = await axios.post('', {email: formData.email})
+            console.log(taskResponse.data)
         }
 
         return response.data
