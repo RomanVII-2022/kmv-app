@@ -2,7 +2,7 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 axios.defaults.validateStatus = () => true
 const axiosInstance = axios.create({
-    baseURL: 'https://d6e6-102-215-34-241.ngrok-free.app'
+    baseURL: 'https://e70f-102-215-34-241.ngrok-free.app'
 })
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,8 +14,10 @@ export default AuthContext;
 export const AuthProvider = ({children}) => {
 
     const [usertoken, setUsertoken] = useState(null)
+    const [isLoading, setIsloading] = useState(false)
 
     const userLogin = async (formData) => {
+        setIsloading(true)
         const response = await axiosInstance.post('/user/login-user',
         {
             email: formData.email,
@@ -27,6 +29,7 @@ export const AuthProvider = ({children}) => {
             await AsyncStorage.setItem('userToken', response.data.data)
             const token  = await AsyncStorage.getItem('userToken')
             setUsertoken(token)
+            setIsloading(false)
         }
 
         return response.data
@@ -34,10 +37,12 @@ export const AuthProvider = ({children}) => {
 
     const isLogedIn = async () => {
         try {
+            setIsloading(true)
             const token  = await AsyncStorage.getItem('userToken')
             setUsertoken(token)
+            setIsloading(false)
         } catch (error) {
-            console.log(error)
+            setIsloading(false)
         }
     }
 
@@ -47,17 +52,20 @@ export const AuthProvider = ({children}) => {
 
     const userLogout = async () => {
         try {
+            setIsloading(true)
             await AsyncStorage.removeItem('userToken')
             setUsertoken(null)
+            setIsloading(false)
         } catch (error) {
-            console.log(error)
+            setIsloading(false)
         }
     }
 
     initialValues = {
         userLogin: userLogin,
         usertoken: usertoken,
-        userLogout: userLogout
+        userLogout: userLogout,
+        isLoading: isLoading
     }
 
     return (
