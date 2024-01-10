@@ -45,9 +45,19 @@ export const AuthProvider = ({children}) => {
         isLogedIn()
     }, [])
 
+    const userLogout = async () => {
+        try {
+            await AsyncStorage.removeItem('userToken')
+            setUsertoken(null)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     initialValues = {
         userLogin: userLogin,
-        usertoken: usertoken
+        usertoken: usertoken,
+        userLogout: userLogout
     }
 
     return (
