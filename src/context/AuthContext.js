@@ -2,11 +2,10 @@ import { createContext, useState, useEffect } from "react";
 import axios from "axios";
 axios.defaults.validateStatus = () => true
 const axiosInstance = axios.create({
-    baseURL: 'https://e70f-102-215-34-241.ngrok-free.app'
+    baseURL: 'https://f7fb-102-215-34-241.ngrok-free.app'
 })
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import jwtDecode from 'jwt-decode';
 
 const AuthContext = createContext();
 
@@ -20,24 +19,27 @@ export const AuthProvider = ({children}) => {
 
     const userLogin = async (formData) => {
         setIsloading(true)
-        const response = await axiosInstance.post('/user/login-user',
-        {
-            email: formData.email,
-            password: formData.password
-        }
-        )
+        try {
+            const response = await axiosInstance.post('/user/login-user',
+            {
+                email: formData.email,
+                password: formData.password
+            }
+            )
 
-        if (response.data.success) {
-            await AsyncStorage.setItem('userToken', response.data.data)
-            const token  = await AsyncStorage.getItem('userToken')
-            setUsertoken(token)
+            if (response.data.success) {
+                await AsyncStorage.setItem('userToken', response.data.data)
+                const token  = await AsyncStorage.getItem('userToken')
+                setUsertoken(token)
+                setIsloading(false)
+            }else {
+                setIsloading(false)
+            }
+
+            return response.data
+        } catch (error) {
             setIsloading(false)
-            
-            const taskResponse = await axios.post('', {email: formData.email})
-            console.log(taskResponse.data)
         }
-
-        return response.data
     }
 
     const isLogedIn = async () => {
