@@ -1,8 +1,9 @@
 import { createContext, useState, useEffect } from "react";
+import { ToastAndroid, Alert } from "react-native";
 import axios from "axios";
 axios.defaults.validateStatus = () => true
 const axiosInstance = axios.create({
-    baseURL: 'https://f7fb-102-215-34-241.ngrok-free.app'
+    baseURL: 'https://c2e3-102-215-34-110.ngrok-free.app'
 })
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -32,13 +33,34 @@ export const AuthProvider = ({children}) => {
                 const token  = await AsyncStorage.getItem('userToken')
                 setUsertoken(token)
                 setIsloading(false)
+                ToastAndroid.showWithGravity(
+                'Login was successful.',
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER,
+                );
             }else {
                 setIsloading(false)
+                Alert.alert('ERROR ALERT', response.data.message || 'Something went wrong. Kindly try again.', [
+                {
+                    text: 'Cancel',
+                    onPress: () => console.log('Cancel Pressed'),
+                    style: 'cancel',
+                },
+                {text: 'OK', onPress: () => console.log('OK Pressed')},
+                ]);
             }
 
             return response.data
         } catch (error) {
             setIsloading(false)
+            Alert.alert('ERROR ALERT', error.message, [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
         }
     }
 
@@ -50,6 +72,14 @@ export const AuthProvider = ({children}) => {
             setIsloading(false)
         } catch (error) {
             setIsloading(false)
+            Alert.alert('ERROR ALERT', error.message, [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
         }
     }
 
@@ -63,8 +93,21 @@ export const AuthProvider = ({children}) => {
             await AsyncStorage.removeItem('userToken')
             setUsertoken(null)
             setIsloading(false)
+            ToastAndroid.showWithGravity(
+            'Logout was successful.',
+            ToastAndroid.LONG,
+            ToastAndroid.CENTER,
+            );
         } catch (error) {
             setIsloading(false)
+            Alert.alert('ERROR ALERT', error.message, [
+            {
+                text: 'Cancel',
+                onPress: () => console.log('Cancel Pressed'),
+                style: 'cancel',
+            },
+            {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]);
         }
     }
 

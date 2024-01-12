@@ -36,8 +36,12 @@ const ProfileScreen = ({ navigation }) => {
     if(!result.canceled) {
       setUserImage(result.assets)
       const formData = new FormData();
-      formData.append('file', result.assets[0])
-      console.log(...formData)
+      const namelist = result.assets[0].uri.split('/')
+      formData.append('file', {
+        uri: result.assets[0].uri,
+        name: namelist.pop(),
+        type: result.assets[0].type
+      })
       dispatch(updateUser(formData))
     }
   };
@@ -50,7 +54,12 @@ const ProfileScreen = ({ navigation }) => {
     <View style={styles.container}>
       <View style={styles.body}>
         <View style={styles.profileimage}>
-          <Ionicons name="person-outline" size={65} color='forestgreen' />
+          {userImage?<Image
+            style={{width: '100%', height: '100%'}}
+            source={{
+              uri: userImage[0].uri,
+            }}
+          /> : <Ionicons name="person-outline" size={65} color='forestgreen' />}
         </View>
 
         <View style={styles.userdetails}>
@@ -109,7 +118,7 @@ const ProfileScreen = ({ navigation }) => {
             </View>
           </View>
         </Modal>
-
+        
       </View>
     </View>
   )
@@ -142,7 +151,8 @@ const styles = StyleSheet.create({
     borderLeftWidth: 2,
     borderLeftColor: 'forestgreen',
     borderRightWidth: 2,
-    borderRightColor: 'forestgreen'
+    borderRightColor: 'forestgreen',
+    overflow: 'hidden'
   },
   userdetails: {
     marginTop: 90,
