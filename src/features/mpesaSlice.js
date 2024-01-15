@@ -3,7 +3,7 @@ import axios from "axios";
 import { APIURL } from '@env';
 axios.defaults.validateStatus = () => true;
 const axiosInstance = axios.create({
-    baseURL: APIURL
+    baseURL: 'https://d8f5-105-163-157-202.ngrok-free.app'
 })
 
 export const sendtomobile = createAsyncThunk('mpesa/sendtomobile', async (formData) => {

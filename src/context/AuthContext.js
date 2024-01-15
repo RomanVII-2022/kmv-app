@@ -1,10 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import { ToastAndroid, Alert } from "react-native";
+import { APIURL } from '@env';
 import axios from "axios";
 axios.defaults.validateStatus = () => true
 const axiosInstance = axios.create({
-    baseURL: 'https://c2e3-102-215-34-110.ngrok-free.app'
+    baseURL: 'https://d8f5-105-163-157-202.ngrok-free.app'
 })
+
+console.log(APIURL)
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
